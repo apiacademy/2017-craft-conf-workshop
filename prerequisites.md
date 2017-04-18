@@ -11,3 +11,9 @@ Check out one or more of these books. You can just skim the contents to get the 
  * "RESTful Web APIs" (Richardson)
  * "Building Hypermedia APIs with Node and HTML5" (Amundsen)
 
+### Videos
+These are sessions I've done in the past on similar topics. Again, skipping through to get the highlights will help you prep for the workshop. Watching the full-length vids (maybe on high speed?) will give you more detail to lean on during the sessions.
+
+ * "REST Hypermedia, and the Semantic Gap" (http://g.mamund.com/rest-gap)
+ * "From Zero to Hypermedia in 30 minutes" (http://g.mamund.com/zero-to-hyper)
+ * "Learning Client Hypermedia from the Ground Up" (http://g.mamund.com/hyper-up)
