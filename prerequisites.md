@@ -7,9 +7,9 @@ You can get a head start on the workshop by checking out the following print and
 ### Books
 Check out one or more of these books. You can just skim the contents to get the feel of the kind of things we'll be talking about in the workshop. Reading in depth will help you gain skills useful during the sessions, too.
 
- * "RESTful Web Clients" (Amundsen)
- * "RESTful Web APIs" (Richardson)
- * "Building Hypermedia APIs with Node and HTML5" (Amundsen)
+ * "RESTful Web Clients", Amundsen (http://g.mamund.com/rwcbook)
+ * "RESTful Web APIs", Richardson (http://g.mamund.com/rwabook)
+ * "Building Hypermedia APIs with Node and HTML5", Amundsen (http://g.mamund.com/bhabook)
 
 ### Videos
 These are sessions I've done in the past on similar topics. Again, skipping through to get the highlights will help you prep for the workshop. Watching the full-length vids (maybe on high speed?) will give you more detail to lean on during the sessions.
