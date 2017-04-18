@@ -10,14 +10,15 @@ The best-case scenario is to arrive with the following already up and running on
 You MAY be able to handle all these requirements via an SSH connection to your own machine `back home' but, again, assume the Internet connections at the session will be minimal.
 
  * Laptop running your favorite OS
- * NodeJs installed
- * git client installed
+ * NodeJs installed (https://nodejs.org/en/download/)
+ * git client installed (https://git-scm.com/downloads)
  * your favorite code/text editor
 
 
 ### Services/Accounts 
 All the code examples will be posted on github. All the running services will be hosted at Heroku. If you want to be able to commit to github, you'll need a github account. If you want to be able to commit to Herkou, you'll need an account there, too. Both offer free account levels that will work just fine for the workshop.
 
- * github
- * heroku
+ * github (https://help.github.com/articles/signing-up-for-a-new-github-account/)
+ * heroku (https://signup.heroku.com/)
+
 
