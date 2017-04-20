@@ -81,9 +81,9 @@ A Short summary of the class lessons on H-Factors and the OAA Challenge.
  * The OAA Challenge (5min)
  * H-Factors for APIs (5min)
  * Client Capabilities (10min)
- ** Plain
- ** Link
- ** Template
- ** Profile
+ ..* Plain
+ ..* Link
+ ..* Template
+ ..* Profile
  * Quick Quiz: "Pin the Client on the Media Type" (5min)
 
