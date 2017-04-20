@@ -2,6 +2,7 @@
 
 ## 2017 CraftConf One Day Workshop
 
+_This document will be updated throughout the weekend ahead of the workshop. Feel free to check back often._
 
 This repo has all the source code and support materials for 2017 [Craft-Conf Workshop by Mike Amundsen](https://craft-conf.com/speaker/MikeAmundsen).
 
