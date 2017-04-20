@@ -6,7 +6,7 @@
 This repo has all the source code and support materials for 2017 [Craft-Conf Workshop by Mike Amundsen](https://craft-conf.com/speaker/MikeAmundsen).
 
 ### Agenda
-We've got a packed schedule for the day. Check out the full agenda [here](agenda.md).
+We've got a packed schedule for the day. Check out the full agenda [here](agenda.md). The schedule (including breaks and lunch) can be found [here](schedule.md).
 
 ### Gitter Channel
 You can join the online convo here: https://gitter.im/hypermedia-hacking/Lobby
