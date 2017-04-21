@@ -17,7 +17,4 @@
  
 Wifi Information: You will get this information at the venue. 
  
-Anything else you need:
-You don't need to bring laptop, but it can be useful, if you would like to take notes.
- 
 During the workshop day your contact will be *Bianka Biro* (mobile: +36 70 382 3083). Contact her in case of questions during the whole day in person, or on mobile.
