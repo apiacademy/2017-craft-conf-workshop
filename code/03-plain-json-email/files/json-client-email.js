@@ -1,5 +1,6 @@
 /*******************************************************
  * json-client HTML/SPA client engine
+ * add email field support
  * Mike Amundsen (@mamund)
  *******************************************************/
 
@@ -28,21 +29,25 @@ function json() {
   g.ctype = "application/json";
   
   // the only fields to process
-  g.fields = ["id","title"];
+  // add email to this list
+  g.fields = ["id","title","email"];
   
   // all URLs & action details
+  // add email field to "add" and "edit"
   g.actions = {
     collection: {href:"/", prompt:"All Tasks"},  
     item:       {href:"/{id}", prompt:"Item"},
     add:        {href:"/", prompt:"Add Task", method:"POST",
                   args:{
-                    title: {value:"", prompt:"Title", required:true}
+                    title: {value:"", prompt:"Title", required:true},
+                    email: {value:"", prompt:"Email", required:false}
                   }
                 },
     edit:       {href:"/{id}", prompt:"Edit", method:"PUT",
                   args:{
                     id: {value:"{id}", prompt:"Id", readOnly:true},
-                    title: {value:"{title}", prompt:"Title", required:true}
+                    title: {value:"{title}", prompt:"Title", required:true},
+                    email: {value:"{email}", prompt:"Email", required:false}
                   }
                 }    
   };
