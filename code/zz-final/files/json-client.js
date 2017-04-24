@@ -1,8 +1,6 @@
 /*******************************************************
  * json-client HTML/SPA client engine
- * June 2015
  * Mike Amundsen (@mamund)
- * Soundtrack : Ornette Coleman Six Classic Albums (2012)
  *******************************************************/
 
 /*  
@@ -13,7 +11,7 @@
 
   ISSUES:
   - memorized the serialized msg for "todo" object array & three fields
-  - memorized all seven documented actions and associated args, HTTP details
+  - memorized all documented actions and associated args, HTTP details
   - will ignore non-breaking changes from server (new actions, objects, fields)
   - will crash on breaking changes from server (changed actions, objects, fields)
 */

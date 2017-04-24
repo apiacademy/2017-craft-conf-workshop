@@ -1,8 +1,7 @@
 /*******************************************************
  * json-client HTML/SPA client engine
- * June 2015 (profile=forms)
+ * profile=forms
  * Mike Amundsen (@mamund)
- * Soundtrack : Ornette Coleman Six Classic Albums (2012)
  *******************************************************/
 
 /*  
@@ -101,10 +100,10 @@ function json() {
         
         d.push(dt,dl);        
         d.push(dd,dl);
+        d.push(ul,elm);
         d.push(dl,li);
         d.push(li,ul);
       }
-      d.push(ul,elm);
     }
   }
   
@@ -114,7 +113,7 @@ function json() {
     
     // item link
     a = d.anchor({
-      href:item.href,
+      href:item.href,  
       rel:"item",
       className:"item action",
       text:"Item"
@@ -216,6 +215,7 @@ function json() {
         required:coll[prop].required,
         readOnly:coll[prop].readOnly,
         pattern:coll[prop].pattern
+    nodes = d.tags("input", form);
       });
       d.push(p,fs);
     }
@@ -254,7 +254,6 @@ function json() {
     q=0;
     form = e.target;
     query = form.action+"/?";
-    nodes = d.tags("input", form);
     for(i=0, x=nodes.length;i<x;i++) {
       if(nodes[i].name && nodes[i].name!=='') {
         if(q++!==0) {
@@ -296,6 +295,7 @@ function json() {
     req(form.action,'put',JSON.stringify(data));
     return false;
   }
+// *** EOD ***
 
   function httpDelete(e) {
     if(confirm("Ready to delete?")===true) {
@@ -329,4 +329,4 @@ function json() {
   return that;
 }
 
-// *** EOD ***
+

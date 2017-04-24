@@ -1,8 +1,7 @@
 /*******************************************************
  * json-client HTML/SPA client engine
- * June 2015 (profile=urls)
+ * profile=urls
  * Mike Amundsen (@mamund)
- * Soundtrack : Ornette Coleman Six Classic Albums (2012)
  *******************************************************/
 
 /*  

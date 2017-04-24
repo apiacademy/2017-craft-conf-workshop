@@ -1,13 +1,11 @@
 /*******************************************************
  * task service implementation
  * json representor w/ FORM profile (server)
- * June 2015
  * Mike Amundsen (@mamund)
- * Soundtrack : Complete Collection : B.B. King (2008)
  *******************************************************/
 
 // json representor
-// w/ profile=forms for NDC Oslo 2015
+// w/ profile=forms
 // strip out action info
 module.exports = json;
 
