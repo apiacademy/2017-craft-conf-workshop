@@ -1,9 +1,7 @@
 /*******************************************************
  * task service implementation
  * representation router (server)
- * May 2015
  * Mike Amundsen (@mamund)
- * Soundtrack : Complete Collection : B.B. King (2008)
  *******************************************************/
 
 // handles internal representation routing (based on conneg)
