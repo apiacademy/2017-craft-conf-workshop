@@ -1,6 +1,6 @@
 /*******************************************************
  * json-client HTML/SPA client engine
- * profile=forms
+ * profile=urls
  * Mike Amundsen (@mamund)
  *******************************************************/
 
@@ -25,12 +25,32 @@ function json() {
   g.url = '';
   g.msg = null;
   g.title = "JSON Client";
-  g.atype = "application/json;profile=forms";
+  g.atype = "application/json;profile=urls";
   g.ctype = "application/json";
   
   // the only fields to process
-  g.fields = ["id","title","email","completed"];
+  g.fields = ["id","title", "email","completed"];
   
+  // all URLs & action details
+  g.actions = {
+    add:        {href:"/", prompt:"Add ToDo", method:"POST",
+                  args:{
+                    title: {value:"", prompt:"Title", required:true},
+                    email: {value:"", prompt:"Email", required:false},
+                    completed: {value:"", prompt:"Completed", required:false}
+                  }
+                },
+    edit:       {href:"/{id}", prompt:"Edit", method:"PUT",
+                  args:{
+                    id: {value:"{id}", prompt:"Id", readOnly:true},
+                    title: {value:"{title}", prompt:"Title", required:true},
+                    email: {value:"{email}", prompt:"Email", required:false},
+                    completed: {value:"{completed}", prompt:"Completed", required:false}
+                  }
+                },    
+    remove:     {href:"/{id}", prompt:"Delete", method:"DELETE"}    
+  };
+
   // init library and start
   function init(url, title) {
     if(!url || url==='') {
@@ -91,19 +111,17 @@ function json() {
 
         // emit the data elements
         dd = d.node("dd");
-        for(var f in item) {
-          if(f!=="href") {
-            p = d.data({className:"item "+f, text:f, value:item[f]+"&nbsp;"});
-            d.push(p,dd);
-          }
+        for(var f of g.fields) {
+          p = d.data({className:"item "+f, text:f, value:(item[f]||"")+"&nbsp;"});
+          d.push(p,dd);
         }
         
         d.push(dt,dl);        
         d.push(dd,dl);
-        d.push(ul,elm);
         d.push(dl,li);
         d.push(li,ul);
       }
+      d.push(ul,elm);
     }
   }
   
@@ -113,20 +131,49 @@ function json() {
     
     // item link
     a = d.anchor({
-      href:item.href,  
+      href:item.href,
       rel:"item",
       className:"item action",
       text:"Item"
     });
     a.onclick = httpGet;
     d.push(a,dt);
+    
+    // only show these for single item renders
+    if(single===true) {
+      // edit link
+      link = g.actions.edit;
+      a = d.anchor({
+        href:link.href.replace(/{id}/,item.id),
+        rel:"edit",
+        className:"item action",
+        text:link.prompt
+      });
+      a.onclick = jsonForm;
+      a.setAttribute("method",link.method);
+      a.setAttribute("args",JSON.stringify(link.args));
+      d.push(a,dt);
+
+      // delete link
+      /*
+      link = g.actions.remove;
+      a = d.anchor({
+        href:link.href.replace(/{id}/,item.id),
+        rel:"remove",
+        className:"item action",
+        text:link.prompt
+      });
+      a.onclick = httpDelete;
+      d.push(a,dt);
+      */
+    }
         
     return dt;  
   }
   
   // handle page-level actions
   function actions() {
-    var elm, coll, idx, link;
+    var elm, coll;
     var ul, li, a;
     
     elm = d.find("actions");
@@ -135,26 +182,35 @@ function json() {
     ul = d.node("ul");
 
     // pull actions from message
-    for(var idx in g.msg.actions) {
-      link = g.msg.actions[idx];
+    for(var link in g.msg.actions) {
       li = d.node("li");
       a = d.anchor({
-        href:link.href,
-        rel:link.rel.join(" ")||"action",
+        href:g.msg.actions[link],
+        rel:link,
         className:"action",
-        text:link.prompt
+        text:link
       });
-      if(link.method) {
-        a.onclick = jsonForm;
-        a.setAttribute("args",JSON.stringify(link.args));
-        a.setAttribute("method",link.method);
-      }
-      else {
-        a.onclick = httpGet;
-      }
+      a.onclick = httpGet;
+      a.style.textTransform="capitalize";
       d.push(a,li);
       d.push(li, ul);
     }    
+    
+    // add
+    li = d.node("li");
+    link = g.actions.add;
+    a = d.anchor({
+      href:link.href,
+      rel:"create-form",
+      className:"action",
+      text:link.prompt
+    });
+    a.onclick = jsonForm;
+    a.setAttribute("method",link.method);
+    a.setAttribute("args", JSON.stringify(link.args));
+    d.push(a,li);
+    d.push(li, ul);
+    
     d.push(ul, elm);
   }
   
@@ -189,9 +245,6 @@ function json() {
       case "PUT":
         form.onsubmit = httpPut;
         break;
-      case "DELETE":
-        form.onsubmit = httpDelete;
-        break;
       case "GET":
       default:
         form.onsubmit = httpQuery;
@@ -218,7 +271,6 @@ function json() {
       });
       d.push(p,fs);
     }
-    //nodes = d.tags("input", form);
     
     p = d.node("p");
     inp = d.node("input");
@@ -254,6 +306,7 @@ function json() {
     q=0;
     form = e.target;
     query = form.action+"/?";
+    nodes = d.tags("input", form);
     for(i=0, x=nodes.length;i<x;i++) {
       if(nodes[i].name && nodes[i].name!=='') {
         if(q++!==0) {
@@ -295,7 +348,6 @@ function json() {
     req(form.action,'put',JSON.stringify(data));
     return false;
   }
-// *** EOD ***
 
   function httpDelete(e) {
     if(confirm("Ready to delete?")===true) {
@@ -329,4 +381,4 @@ function json() {
   return that;
 }
 
-
+// *** EOD ***

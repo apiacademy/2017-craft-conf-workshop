@@ -1,6 +1,6 @@
 /*******************************************************
  * json-client HTML/SPA client engine
- * profile=forms
+ * add email field support
  * Mike Amundsen (@mamund)
  *******************************************************/
 
@@ -12,7 +12,7 @@
 
   ISSUES:
   - memorized the serialized msg for "todo" object array & three fields
-  - memorized all seven documented actions and associated args, HTTP details
+  - memorized all documented actions and associated args, HTTP details
   - will ignore non-breaking changes from server (new actions, objects, fields)
   - will crash on breaking changes from server (changed actions, objects, fields)
 */
@@ -25,12 +25,33 @@ function json() {
   g.url = '';
   g.msg = null;
   g.title = "JSON Client";
-  g.atype = "application/json;profile=forms";
+  g.atype = "application/json";
   g.ctype = "application/json";
   
   // the only fields to process
-  g.fields = ["id","title","email","completed"];
+  // add email to this list
+  g.fields = ["id","title","email"];
   
+  // all URLs & action details
+  // add email field to "add" and "edit"
+  g.actions = {
+    collection: {href:"/", prompt:"All Tasks"},  
+    item:       {href:"/{id}", prompt:"Item"},
+    add:        {href:"/", prompt:"Add Task", method:"POST",
+                  args:{
+                    title: {value:"", prompt:"Title", required:true},
+                    email: {value:"", prompt:"Email", required:false}
+                  }
+                },
+    edit:       {href:"/{id}", prompt:"Edit", method:"PUT",
+                  args:{
+                    id: {value:"{id}", prompt:"Id", readOnly:true},
+                    title: {value:"{title}", prompt:"Title", required:true},
+                    email: {value:"{email}", prompt:"Email", required:false}
+                  }
+                }    
+  };
+
   // init library and start
   function init(url, title) {
     if(!url || url==='') {
@@ -91,70 +112,92 @@ function json() {
 
         // emit the data elements
         dd = d.node("dd");
-        for(var f in item) {
-          if(f!=="href") {
-            p = d.data({className:"item "+f, text:f, value:item[f]+"&nbsp;"});
-            d.push(p,dd);
-          }
+        for(var f of g.fields) {
+          p = d.data({className:"item "+f, text:f, value:(item[f]||"")+"&nbsp;"});
+          d.push(p,dd);
         }
         
         d.push(dt,dl);        
         d.push(dd,dl);
-        d.push(ul,elm);
         d.push(dl,li);
         d.push(li,ul);
       }
+      d.push(ul,elm);
     }
   }
   
   // handle item-level actions
   function itemActions(dt, item, single) {
-    var a, link, href;
+    var a, link;
     
     // item link
+    link = g.actions.item;
     a = d.anchor({
-      href:item.href,  
+      href:link.href.replace(/{id}/,item.id),
       rel:"item",
       className:"item action",
-      text:"Item"
+      text:link.prompt
     });
     a.onclick = httpGet;
     d.push(a,dt);
+    
+    // only show these for single item renders
+    if(single===true) {
+      // edit link
+      link = g.actions.edit;
+      a = d.anchor({
+        href:link.href.replace(/{id}/,item.id),
+        rel:"edit",
+        className:"item action",
+        text:link.prompt
+      });
+      a.onclick = jsonForm;
+      a.setAttribute("method",link.method);
+      a.setAttribute("args",JSON.stringify(link.args));
+      d.push(a,dt);
+    }
         
     return dt;  
   }
   
   // handle page-level actions
   function actions() {
-    var elm, coll, idx, link;
+    var elm, coll;
     var ul, li, a;
     
     elm = d.find("actions");
     d.clear(elm);
 
     ul = d.node("ul");
+    
+    // collection
+    li = d.node("li");
+    link = g.actions.collection;
+    a = d.anchor({
+      href:link.href,
+      rel:"collection",
+      className:"action",
+      text:link.prompt
+    });
+    a.onclick = httpGet;
+    d.push(a,li);
+    d.push(li, ul);
 
-    // pull actions from message
-    for(var idx in g.msg.actions) {
-      link = g.msg.actions[idx];
-      li = d.node("li");
-      a = d.anchor({
-        href:link.href,
-        rel:link.rel.join(" ")||"action",
-        className:"action",
-        text:link.prompt
-      });
-      if(link.method) {
-        a.onclick = jsonForm;
-        a.setAttribute("args",JSON.stringify(link.args));
-        a.setAttribute("method",link.method);
-      }
-      else {
-        a.onclick = httpGet;
-      }
-      d.push(a,li);
-      d.push(li, ul);
-    }    
+    // add
+    li = d.node("li");
+    link = g.actions.add;
+    a = d.anchor({
+      href:link.href,
+      rel:"create-form",
+      className:"action",
+      text:link.prompt
+    });
+    a.onclick = jsonForm;
+    a.setAttribute("method",link.method);
+    a.setAttribute("args", JSON.stringify(link.args));
+    d.push(a,li);
+    d.push(li, ul);
+    
     d.push(ul, elm);
   }
   
@@ -189,9 +232,6 @@ function json() {
       case "PUT":
         form.onsubmit = httpPut;
         break;
-      case "DELETE":
-        form.onsubmit = httpDelete;
-        break;
       case "GET":
       default:
         form.onsubmit = httpQuery;
@@ -218,7 +258,6 @@ function json() {
       });
       d.push(p,fs);
     }
-    //nodes = d.tags("input", form);
     
     p = d.node("p");
     inp = d.node("input");
@@ -254,6 +293,7 @@ function json() {
     q=0;
     form = e.target;
     query = form.action+"/?";
+    nodes = d.tags("input", form);
     for(i=0, x=nodes.length;i<x;i++) {
       if(nodes[i].name && nodes[i].name!=='') {
         if(q++!==0) {
@@ -295,7 +335,6 @@ function json() {
     req(form.action,'put',JSON.stringify(data));
     return false;
   }
-// *** EOD ***
 
   function httpDelete(e) {
     if(confirm("Ready to delete?")===true) {
@@ -329,4 +368,4 @@ function json() {
   return that;
 }
 
-
+// *** EOD ***
