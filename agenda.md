@@ -12,7 +12,7 @@ Students will learn the basics of the hypermedia style API and the ten H-Factors
  * Quick Quiz: "Where's the H-Factor?" (5min)
  * Group Discussion: "Hypermedia Advantages and Drawbacks" (10min)
 
-#### 2, The Plain JSON Client (35min)
+#### 2. The Plain JSON Client (35min)
 The classic CRUD (Create-Read-Update-Delete) pattern is reviewed. Students will install and test run the provided CRUD client as a way to confirm their setup for the rest of the class.
 
  * The CRUD Pattern (10min)
@@ -67,15 +67,16 @@ This last hypermedia-style client is able to handle data profiles for display. W
  * Exercise: Including POD Support (15min)
  * Group Discussion: "Can we improve POD?"
 
+////
 #### 9. The JSON Profile Client and Change (40min)
 With the updated clients that supports Objects-Addresses-Actions (OAA), we'll see what happens when the server adds an entirely new object and workflow to the API. Can the client handle this w/o any changes?
 
  * Adding the Notes Object Workflow (10min)
  * Exercise: Including Notes Support (20min)
  * Group Discussion: "Why use the Collection+JSON Media Type?" (10min)
+////
 
-
-#### 10. Summary (25min)
+#### 9. Summary (25min)
 A Short summary of the class lessons on H-Factors and the OAA Challenge.
 
  * The OAA Challenge (5min)
