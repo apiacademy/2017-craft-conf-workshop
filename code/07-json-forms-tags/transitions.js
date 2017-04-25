@@ -48,7 +48,7 @@ function fillTrans() {
     target : "list",
     prompt : "Search ToDos",
     inputs : [
-      {name : "title", prompt : "Title", value : ""}
+      {name : "tags", prompt : "Tags", value : ""}
     ]
   });
   

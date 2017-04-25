@@ -98,7 +98,7 @@ function json(object) {
                 rel: actions[i].rel,
                 method:"GET",
                 args:{
-                  title: {value:"", prompt:"Title", required:true}
+                  tags: {value:"", prompt:"Tags", required:true}
                 }
               };
               break;            

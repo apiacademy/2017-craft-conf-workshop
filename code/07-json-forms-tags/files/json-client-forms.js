@@ -91,7 +91,7 @@ function json() {
 
         // emit the data elements
         dd = d.node("dd");
-        for(var f in item) {
+        for(var f of g.fields) {
           if(f!=="href") {
             p = d.data({className:"item "+f, text:f, value:item[f]+"&nbsp;"});
             d.push(p,dd);
@@ -254,6 +254,7 @@ function json() {
     q=0;
     form = e.target;
     query = form.action+"/?";
+    nodes = d.tags("input",form);
     for(i=0, x=nodes.length;i<x;i++) {
       if(nodes[i].name && nodes[i].name!=='') {
         if(q++!==0) {

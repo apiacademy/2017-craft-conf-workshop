@@ -10,7 +10,7 @@ var root = '';
 
 // these are the fields associated w/ this resource
 // add email field to this list
-var props =  ["id","title","completeFlag","email"];
+var props =  ["id","title","completeFlag","email","tags"];
 
 var qs = require('querystring');
 var map = require('./../maps.js');
@@ -65,7 +65,7 @@ function addItem(req, res, respond) {
   req.on('end', function() {
     try {
       msg = utils.parseBody(body, req.headers["content-type"]);
-      item = validateItem(msg, props);      
+      item = validateItem(msg, props); 	
       if (item.title === "") {
         doc = utils.errorResponse(req, res, "Missing Title", 400);
       } else {
@@ -184,6 +184,11 @@ function sendList(req, res, respond, filter) {
   tran.rel = ["create-form"];
   coll.splice(coll.length, 0, tran);
 
+  tran = transitions("searchForm");
+  tran.href = root + "/";
+  tran.rel = ["search-form"];
+  coll.splice(coll.length, 0, tran);
+
   // compose graph 
   doc = {};
   doc.title = "ToDo";
@@ -250,6 +255,11 @@ function sendItem(req, res, id, respond) {
     tran = transitions("addForm");
     tran.href = root +"/";
     tran.rel = ["create-form"];
+    coll.splice(coll.length, 0, tran);
+
+    tran = transitions("searchForm");
+    tran.href = root + "/";
+    tran.rel = ["search-form"];
     coll.splice(coll.length, 0, tran);
   
     // compose graph
