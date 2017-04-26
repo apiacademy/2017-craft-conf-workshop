@@ -1,3 +1,3 @@
-# Hypermedia Hacking 2017
+# 2017 Hypermedia Hacking Workshop
 
-## 2017 Craft-Conf Slides
+## Slides for 2017 CraftConf One Day Workshop
